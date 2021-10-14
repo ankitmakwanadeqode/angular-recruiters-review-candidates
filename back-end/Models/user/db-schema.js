@@ -1,7 +1,7 @@
 /*
  * @file: db-schema.js
  * @description: It Contain db schema.
- * @author: Ashish Prajapati
+ * @author: Ankit Makwana
  */
 
 const mongoose = require('mongoose')

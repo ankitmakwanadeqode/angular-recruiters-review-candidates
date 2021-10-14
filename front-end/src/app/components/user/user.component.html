@@ -1,66 +1,74 @@
 <div class="container">
   <div class="mt-5">
 
-    <h3>Search Users</h3>
-
     <!-- The form -->
-    <div class="col-md-5">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by name" [(ngModel)]="username" />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" (click)="searchUserName()">
-            Search
-          </button>
-          <button class="btn btn-default" type="button" (click)="clearData()">
-            Clear
-          </button>
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-5">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Search by Name" [(ngModel)]="userName" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="searchUserName()">
+              Search
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+            <button class="btn btn-outline-secondary btn-default" type="button" (click)="clearData()">
+              Clear
+            </button>
+          </div>
         </div>
+        <div class="error_msg" *ngIf="errorMsg">Please enter Name</div>
       </div>
     </div>
 
+    <div class="clearfix"></div>
+    
     <!-- Start User List -->
-    <div *ngIf="defaultData; else elseSecondBlock">
+    <div *ngIf="defaultData && getResultData && getResultData.length; else elseSecondBlock">
 
-      <div 
+      <div *ngFor="let resultData of getResultData | paginate: {
+            itemsPerPage: itemsPerPage, 
+            currentPage: currentPage
+          }; let i = index"
         class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
         <div class="row align-items-center">
+
+          <div class="col-12 col-md-3 text-center">
+            <a href="{{resultData.html_url}}">
+              <img src="{{resultData.avatar_url}}" height="100" width="100" alt="No-Image" />
+            </a>
+          </div>
+
           <div class="col-12 col-md-4">
             <h4 class="pt-3 text-170 text-600 text-green-d1 letter-spacing">
-              
+              {{resultData.name}}
             </h4>
 
             <div class="text-secondary-d2 text-120">
-              <label>Stars count:</label>
-              <div class="text-danger-m3 text-120 mr-1 ml-n4 pos-rel d-inline-block">
-                
-              </div>
+              <label>Member since:  {{resultData.created_at | date: 'yyyy-MM-dd'}}</label>
             </div>
           </div>
 
-          <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+          <ul class="list-unstyled mb-0 col-12 col-md-5 text-dark-l1 text-90 text-left my-4 my-md-0">
             <li>
               <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
               <span>
-                <label>Name: </label>
-                <span class="text-110"> </span>
+                <label>Followers: </label> {{resultData.followers}}
               </span>
             </li>
-
             <li class="mt-25">
               <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
               <span class="text-110">
-                <label>Description:</label> 
+                <label>Following:</label> {{resultData.following}}
               </span>
             </li>
-
+            <li class="mt-25">
+              <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+              <span class="text-110">
+                <label>Number of repos:</label> {{resultData.public_repos}}
+              </span>
+            </li>
           </ul>
 
-          <div class="col-12 col-md-4 text-center">
-            <a href="" target="_blank"
-              class="f-n-hover btn btn-success btn-raised px-4 py-25 w-75 text-600">
-              Repo URL
-            </a>
-          </div>
         </div>
       </div>
 
@@ -73,19 +81,12 @@
 
     <!-- Else Condition -->
     <ng-template #elseSecondBlock>
-      <ng-container *ngIf="defaultData===false;else elseThirdBlock">
+      <ng-container *ngIf="defaultData===true;">
         <div
           class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
-
+          <h4 class="error_h4">No User found!</h4>
         </div>
       </ng-container>
-    </ng-template>
-
-    <ng-template #elseThirdBlock>
-      <div
-        class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
-        <h4 class="error_h4">No User found!</h4>
-      </div>
     </ng-template>
 
   </div>

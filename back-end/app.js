@@ -3,7 +3,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const createError = require('http-errors')
 require('dotenv').config()
-// const DB = require('./db')
+const DB = require('./db')
 const swaggerUi = require('swagger-ui-express')
 const SwaggerJsDocs = require('./swagger')
 const path = require('path');
