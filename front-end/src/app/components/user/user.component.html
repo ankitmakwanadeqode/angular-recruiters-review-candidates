@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="mt-5">
+
+    <h3>Search Users</h3>
+
+    <!-- The form -->
+    <div class="col-md-5">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by name" [(ngModel)]="username" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" (click)="searchUserName()">
+            Search
+          </button>
+          <button class="btn btn-default" type="button" (click)="clearData()">
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start User List -->
+    <div *ngIf="defaultData; else elseSecondBlock">
+
+      <div 
+        class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+            <h4 class="pt-3 text-170 text-600 text-green-d1 letter-spacing">
+              
+            </h4>
+
+            <div class="text-secondary-d2 text-120">
+              <label>Stars count:</label>
+              <div class="text-danger-m3 text-120 mr-1 ml-n4 pos-rel d-inline-block">
+                
+              </div>
+            </div>
+          </div>
+
+          <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+            <li>
+              <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+              <span>
+                <label>Name: </label>
+                <span class="text-110"> </span>
+              </span>
+            </li>
+
+            <li class="mt-25">
+              <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+              <span class="text-110">
+                <label>Description:</label> 
+              </span>
+            </li>
+
+          </ul>
+
+          <div class="col-12 col-md-4 text-center">
+            <a href="" target="_blank"
+              class="f-n-hover btn btn-success btn-raised px-4 py-25 w-75 text-600">
+              Repo URL
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-container">
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+      </div>
+
+    </div>
+    <!-- End User List -->
+
+    <!-- Else Condition -->
+    <ng-template #elseSecondBlock>
+      <ng-container *ngIf="defaultData===false;else elseThirdBlock">
+        <div
+          class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
+
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #elseThirdBlock>
+      <div
+        class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
+        <h4 class="error_h4">No User found!</h4>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
