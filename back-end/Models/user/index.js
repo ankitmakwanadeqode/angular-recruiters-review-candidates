@@ -1,7 +1,7 @@
 /*
  * @file: index.js
  * @description: It Contain function layer for collection.
- * @author: Ashish Prajapati
+ * @author: Ankit Makwana
  */
 
 const mongoose = require('mongoose')

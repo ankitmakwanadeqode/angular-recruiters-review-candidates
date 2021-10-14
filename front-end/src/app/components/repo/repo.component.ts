@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-list',
@@ -8,40 +8,39 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RepoComponent implements OnInit {
 
-  resdatas: any;
-  title = '';
-  currentPage = 1;
-  itemsPerPage = 10;
-  defaultData = false;
+  getResultData: any;
+  title: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  defaultData: boolean = false;
+  loading: boolean = false;
+  errorMsg: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private commonService: CommonService) { }
 
   ngOnInit(): void {
-    // this.retrieveUsers();
-  }
-
-  retrieveUsers(): void {
-    this.userService.getAll(this.currentPage)
-      .subscribe(
-        data => {
-          this.resdatas = data.data.items;
-          this.defaultData = false;
-          console.log(this.resdatas);
-        },
-        error => {
-          console.log(error);
-        });
   }
 
   searchTitle(): void {
-    this.userService.findByTitle(this.title, this.currentPage)
+    this.loading = true;
+    if(this.title.length === 0)
+    {
+      this.errorMsg = true;
+      this.loading = false;
+      return;
+    }
+    this.commonService.findByTitle(this.title, this.currentPage)
       .subscribe(
         data => {
-          this.resdatas = data.data.items;
+          this.getResultData = data.data.items;
           this.defaultData = true;
+          this.loading = false;
+          this.errorMsg = false;
           console.log(data);
         },
         error => {
+          this.loading = false;
+          this.errorMsg = false;
           console.log(error);
         });
   }
@@ -52,8 +51,10 @@ export class RepoComponent implements OnInit {
 
   clearData(){
     this.title = '';
-    this.resdatas = [];
+    this.getResultData = [];
     this.defaultData = false;
+    this.loading = false;
+    this.errorMsg = false;
   }
 
 }

@@ -1,22 +1,31 @@
 <div>
-  <nav class="navbar navbar-expand nav_header">
-    <img
-    width="40"
-    alt="Angular Logo"
-    class="navbar-brand"
-    src="assets/images/image002.png"
-  />
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="repo" class="nav-link">Repo</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="user" class="nav-link">User</a>
-      </li>
-    </div>
-  </nav>
+  <!-- Header -->
+  <header class="p-2 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <img width="50" alt="Angular Logo" class="navbar-brand" src="assets/images/logo.png" />
+        </a>
 
-  <div class="container mt-3">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a routerLink="repo" [routerLinkActive]="['is_active']" class="nav-link px-2 text_white">Repo</a></li>
+          <li><a routerLink="user" [routerLinkActive]="['is_active']" class="nav-link px-2 text_white">User</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="container">
     <router-outlet></router-outlet>
   </div>
+
+  <!-- Footer -->
+  <footer class="page-footer font-small bg-dark pt-1 fixed-bottom">
+    <div class="footer-copyright text-center py-3 text_white">© 2021 Copyright:
+      <a href="https://www.persistent.com/" class="text_white">www.persistent.com</a>
+    </div>
+  </footer>
+
 </div>

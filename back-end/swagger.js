@@ -1,7 +1,7 @@
 /*
  * @file: swagger-config.js
  * @description: It Contain swagger configrations.
- * @author: Ashish Prajapati
+ * @author: Ankit Makwana
  */
 const swaggerJsDocs = require('swagger-jsdoc');
 const { HOST, PORT } = process.env;
@@ -13,7 +13,7 @@ const swaggerOptions = {
             version: '1.0',
             description: 'All api end points',
             contact: {
-                name: 'Ashish Prajapati'
+                name: 'Ankit Makwana'
             },
             servers: [HOST + ':' + PORT]
         },

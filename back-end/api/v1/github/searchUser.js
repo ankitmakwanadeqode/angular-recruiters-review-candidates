@@ -5,7 +5,7 @@
  */
 
 const express = require('express')
-const { searchRepo } = require('../../../Controllers/Github.Controller')
+const { searchUser } = require('../../../Controllers/Github.Controller')
 const Joi = require('@hapi/joi')
 const createError = require('http-errors')
 
@@ -13,14 +13,14 @@ const app = express()
 
 /**
  * @swagger
- * /api/v1/github/search_repo:
+ * /api/v1/github/search_user:
  *  get:
  *   tags: ["Github"]
  *   summary: Github Search API
  *   description: api used to Search github
  *   parameters:
  *      - in: query
- *        name: repo
+ *        name: user
  *        required: true
  *      - in: query
  *        name: page
@@ -36,7 +36,7 @@ const app = express()
  */
 
 const githubSchema = Joi.object({
-    repo: Joi.string()    
+    user: Joi.string()    
         .label('Repo')
 });
 
@@ -51,9 +51,9 @@ const validateData = async (req, res, next) => {
 }
 
 app.get(
-    '/github/search_repo',
+    '/github/search_user',
     validateData,
-    searchRepo
+    searchUser
 );
 
 module.exports = app;

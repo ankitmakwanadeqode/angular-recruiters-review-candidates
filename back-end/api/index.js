@@ -1,7 +1,7 @@
 /*
  * @file: index.js
  * @description: It combine all routers.
- * @author: Ashish Prajapati
+ * @author: Ankit Makwana
  */
 
 const github = require('./v1/github')
