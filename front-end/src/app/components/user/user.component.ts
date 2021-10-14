@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-detail',
@@ -8,25 +8,39 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserComponent implements OnInit {
 
-  usersdatas : any;
-  username = '';
-  currentPage = 1;
-  defaultData = false;
+  getResultData: any;
+  userName: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  defaultData: boolean = false;
+  loading: boolean = false;
+  errorMsg: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private commonService: CommonService) { }
 
   ngOnInit(): void {
   }
 
   searchUserName(): void {
-    this.userService.findByUserName(this.username, this.currentPage)
+    this.loading = true;
+    if(this.userName.length === 0)
+    {
+      this.errorMsg = true;
+      this.loading = false;
+      return;
+    }
+    this.commonService.findByUserName(this.userName, this.currentPage)
       .subscribe(
         data => {
-          this.usersdatas = data;
+          this.getResultData = data.data;
           this.defaultData = true;
+          this.loading = false;
+          this.errorMsg = false;
           console.log(data);
         },
         error => {
+          this.loading = false;
+          this.errorMsg = false;
           console.log(error);
         });
   }
@@ -36,9 +50,11 @@ export class UserComponent implements OnInit {
   }
 
   clearData(){
-    this.username = '';
-    this.usersdatas = [];
+    this.userName = '';
+    this.getResultData = [];
     this.defaultData = false;
+    this.loading = false;
+    this.errorMsg = false;
   }
 
 }

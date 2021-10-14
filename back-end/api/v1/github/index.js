@@ -1,12 +1,12 @@
 /*
  * @file: index.js
  * @description: It contain all routes.
- * @author: Ashish Prajapati
+ * @author: Ankit Makwana
  */
 
 
 const searchRepo = require('./searchRepo')
+const searchUser = require('./searchUser')
 
-
-module.exports = [searchRepo];
+module.exports = [searchRepo, searchUser];
 

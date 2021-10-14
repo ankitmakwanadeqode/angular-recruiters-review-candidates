@@ -1,29 +1,32 @@
 <div class="container">
   <div class="mt-5">
 
-    <h3>Search Repo</h3>
-
+    
     <!-- The form -->
-    <div class="col-md-5">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Repo name" [(ngModel)]="title" />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
-            Search
-          </button>
-          <button class="btn btn-default" type="button" (click)="clearData()">
-            Clear
-          </button>
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-5">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Search by Repo Name" [(ngModel)]="title" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+              Search
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+            <button class="btn btn-outline-secondary btn-default" type="button" (click)="clearData()">
+              Clear
+            </button>
+          </div>
         </div>
+        <div class="error_msg" *ngIf="errorMsg">Please enter Repo Name</div>
       </div>
     </div>
 
-    <br />
+    <div class="clearfix"></div>
 
     <!-- Start User List -->
-    <div *ngIf="defaultData && resdatas && resdatas.length; else elseSecondBlock">
+    <div *ngIf="defaultData && getResultData && getResultData.length; else elseSecondBlock">
 
-      <div *ngFor="let resdata of resdatas | paginate: {
+      <div *ngFor="let resultData of getResultData | paginate: {
           itemsPerPage: itemsPerPage, 
           currentPage: currentPage
         }; let i = index"
@@ -31,13 +34,13 @@
         <div class="row align-items-center">
           <div class="col-12 col-md-4">
             <h4 class="pt-3 text-170 text-600 text-green-d1 letter-spacing">
-              {{resdata.full_name}}
+              {{resultData.full_name}}
             </h4>
 
             <div class="text-secondary-d2 text-120">
               <label>Stars count:</label>
               <div class="text-danger-m3 text-120 mr-1 ml-n4 pos-rel d-inline-block">
-                {{resdata.stargazers_count}}
+                {{resultData.stargazers_count}}
               </div>
             </div>
           </div>
@@ -47,21 +50,21 @@
               <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
               <span>
                 <label>Name: </label>
-                <span class="text-110"> {{resdata.name}}</span>
+                <span class="text-110"> {{resultData.owner.login}}</span>
               </span>
             </li>
 
             <li class="mt-25">
               <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
               <span class="text-110">
-                <label>Description:</label> {{resdata.description}}
+                <label>Description:</label> {{resultData.description}}
               </span>
             </li>
 
           </ul>
 
           <div class="col-12 col-md-4 text-center">
-            <a href="{{resdata.clone_url}}" target="_blank"
+            <a href="{{resultData.clone_url}}" target="_blank"
               class="f-n-hover btn btn-success btn-raised px-4 py-25 w-75 text-600">
               Repo URL
             </a>
@@ -78,22 +81,13 @@
 
     <!-- Else Condition -->
     <ng-template #elseSecondBlock>
-      <ng-container *ngIf="defaultData===false;else elseThirdBlock">
+      <ng-container *ngIf="defaultData===true;">
         <div
-        class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
-        
-        </div>
-      </ng-container>
-    </ng-template>
-    
-    <ng-template #elseThirdBlock>
-      <div
         class="d-style bgc-white btn btn-brc-tp btn-outline-green btn-h-outline-green btn-a-outline-green w-100 my-2 py-3 shadow-sm border-2">
         <h4 class="error_h4">No Repo found!</h4>
       </div>
+      </ng-container>
     </ng-template>
-
-
-
+    
   </div>
 </div>
